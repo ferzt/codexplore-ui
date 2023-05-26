@@ -1,0 +1,94 @@
+@startuml
+
+actor player
+
+participant GameInitView as GameInitView <<GameInitController>>
+participant "Web API" as api <<Validate User>>
+participant Database <<Players>>
+
+player -> GameInitView: click()
+activate GameInitView
+GameInitView -> api: authorize()
+activate api
+api -> Database: searchMatchingPlayer()
+activate Database
+api <-- Database
+deactivate Database
+api -> Database: createGameSession()
+activate Database
+api <-- Database: session_id
+deactivate Database
+GameInitView <-- api
+deactivate api
+return 
+
+
+@enduml
+
+@startuml StartGameCall
+
+actor player
+
+participant GameDesignView <<GameDesignController>>
+participant "Web API" as api <<Game>>
+participant Database
+
+player -> GameDesignView: click()
+activate GameDesignView
+GameDesignView -> api: startgame()
+activate api
+api -> Database: getGamePlay(session_id)
+api <-- Database
+GameDesignView <-- api
+deactivate api
+return 
+
+
+@enduml
+
+@startuml UpdateGameInfo
+
+participant GamePlayView <<GamePlayController>>
+participant "Web API" as api <<Game>>
+participant Database
+
+[-> GamePlayView
+activate GamePlayView
+GamePlayView -> api: updateGame()
+
+activate api
+api -> Database: updateGamePlay(session_id)
+api <-- Database
+GamePlayView <-- api
+deactivate api
+[<-- GamePlayView
+deactivate GamePlayView
+
+
+@enduml
+
+
+
+@startuml PublishGameResults
+
+participant GamePlayView <<GamePlayController>>
+participant "Web API" as api <<Game>>
+participant Database
+
+[-> GamePlayView
+activate GamePlayView
+GamePlayView -> api: updateGame()
+
+activate api
+api -> Database: updateGamePlay(session_id)
+api <-- Database
+api -> Database: updateGameSessions(score)
+api <-- Database
+GamePlayView <-- api
+deactivate api
+[<-- GamePlayView
+deactivate GamePlayView
+
+
+@enduml
+

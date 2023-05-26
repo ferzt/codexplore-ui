@@ -1,0 +1,304 @@
+@startuml
+set namespaceSeparator ::
+
+class "codexplore_game::overlays::overlay_controller.dart::OverlayController" {
+  +CodexploreGame game
+  +Widget build()
+}
+
+"codexplore_game::overlays::overlay_controller.dart::OverlayController" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::overlays::overlay_controller.dart::OverlayController"
+
+class "codexplore_game::overlays::score_overlay.dart::ScoreOverlay" {
+  +CodexploreGame game
+  +Widget build()
+}
+
+"codexplore_game::overlays::score_overlay.dart::ScoreOverlay" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::overlays::score_overlay.dart::ScoreOverlay"
+
+class "codexplore_game::overlays::dialog_overlay.dart::DialogOverlay" {
+  +CodexploreGame game
+  +Widget build()
+}
+
+"codexplore_game::overlays::dialog_overlay.dart::DialogOverlay" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::overlays::dialog_overlay.dart::DialogOverlay"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "codexplore_game::overlays::dialog_overlay.dart::DialogOverlay"
+
+class "codexplore_game::overlays::audio_overlay.dart::AudioOverlay" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::overlays::audio_overlay.dart::AudioOverlay"
+
+class "codexplore_game::codexplore_game.dart::CodexploreGame" {
+  +VehicleComponent vehicle
+  +double mapWidth
+  +double mapHeight
+  +TiledComponent<FlameGame> homeMap
+  +Vector2 startPoint
+  +List<Component> componentList
+  +List<TiledObject> gpcomponent
+  +String testInfo
+  +DirectedGraph<Nodes> path
+  +int direction
+  +int collisionDirection
+  +int currentLocation
+  +double characterSize
+  +double vehicleSpeed
+  +String soundTrackName
+  +int friendNumber
+  +int maxPortables
+  +int sceneNumber
+  +int bakedGoodsInventory
+  +int gemInventory
+  +AudioPool yummy
+  +AudioPool applause
+  +bool showDialog
+  +String dialogMessage
+  +int comparator()
+  +int inverseComparator()
+  +Future<void> onLoad()
+  +void render()
+  +void update()
+  +void onTapUp()
+  +void newScene()
+}
+
+"codexplore_game::codexplore_game.dart::CodexploreGame" o-- "codexplore_game::elements::vehicle_component.dart::VehicleComponent"
+"codexplore_game::codexplore_game.dart::CodexploreGame" o-- "flame_tiled::src::tiled_component.dart::TiledComponent<FlameGame>"
+"codexplore_game::codexplore_game.dart::CodexploreGame" o-- "vector_math::vector_math_64.dart::Vector2"
+"codexplore_game::codexplore_game.dart::CodexploreGame" o-- "directed_graph::src::graphs::directed_graph.dart::DirectedGraph<Nodes>"
+"codexplore_game::codexplore_game.dart::CodexploreGame" o-- "flame_audio::audio_pool.dart::AudioPool"
+"flame::src::game::flame_game.dart::FlameGame" <|-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flame::src::gestures::detectors.dart::TapDetector" <|-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flame::src::collisions::has_collision_detection.dart::HasCollisionDetection" <|-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+
+class "codexplore_game::models::Nodes.dart::Nodes" {
+  +Vector2 position
+}
+
+"codexplore_game::models::Nodes.dart::Nodes" o-- "vector_math::vector_math_64.dart::Vector2"
+
+class "codexplore_game::models::path.dart::GamePath" {
+  +DirectedGraph<String> graph
+  +int comparator()
+  +int inverseComparator()
+}
+
+"codexplore_game::models::path.dart::GamePath" o-- "directed_graph::src::graphs::directed_graph.dart::DirectedGraph<String>"
+
+class "codexplore_game::main.dart::Test" {
+  {static} +String status
+}
+
+class "codexplore_game::main.dart::GameBuildData" {
+  +String data
+}
+
+class "codexplore_game::main.dart::GameData" {
+  +String playerA
+  +dynamic playerB
+  +dynamic numPlayers
+  +String getPlayerA()
+  +String getNumPlayers()
+}
+
+class "codexplore_game::main.dart::CodeGameWidget" {
+  +Game game
+}
+
+"codexplore_game::main.dart::CodeGameWidget" o-- "flame::src::game::game.dart::Game"
+"flame::src::game::game_widget::game_widget.dart::GameWidget" <|-- "codexplore_game::main.dart::CodeGameWidget"
+
+class "codexplore_game::main.dart::MyToggleableInputWidget" {
+  +dynamic visible
+  +void onVisChange()
+  +_MyToggleableInputWidgetState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "codexplore_game::main.dart::MyToggleableInputWidget"
+
+class "codexplore_game::main.dart::_MyToggleableInputWidgetState" {
+  -bool _isVisible
+  +TextEditingController secondNameController
+  +dynamic onVisChange()
+  +void initState()
+  +Widget build()
+}
+
+"codexplore_game::main.dart::_MyToggleableInputWidgetState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "codexplore_game::main.dart::_MyToggleableInputWidgetState"
+
+class "codexplore_game::main.dart::MyApp" {
+  {static} -String _title
+  {static} -Color _primaryColor
+  +Widget build()
+}
+
+"codexplore_game::main.dart::MyApp" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::main.dart::MyApp"
+
+class "codexplore_game::main.dart::MyStatefulWidget" {
+  +State<MyStatefulWidget> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "codexplore_game::main.dart::MyStatefulWidget"
+
+class "codexplore_game::main.dart::_MyStatefulWidgetState" {
+  +TextEditingController nameController
+  +TextEditingController passwordController
+  -int _choice
+  +String dummy
+  +GameData gameData
+  +Future<GameBuildData> gbd
+  +bool visibilityInput
+  +void initState()
+  -void _navigateToNextScreen()
+  -void _navigateToVehicleDesignScreen()
+  +Widget build()
+}
+
+"codexplore_game::main.dart::_MyStatefulWidgetState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"codexplore_game::main.dart::_MyStatefulWidgetState" o-- "codexplore_game::main.dart::GameData"
+"flutter::src::widgets::framework.dart::State" <|-- "codexplore_game::main.dart::_MyStatefulWidgetState"
+
+class "codexplore_game::dialog::dialog_box.dart::DialogBox" {
+  +CodexploreGame game
+  +void drawBackground()
+  +void update()
+}
+
+"codexplore_game::dialog::dialog_box.dart::DialogBox" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flame::src::components::text_box_component.dart::TextBoxComponent" <|-- "codexplore_game::dialog::dialog_box.dart::DialogBox"
+
+class "codexplore_game::elements::portables.dart::PortableComponent" {
+  +CodexploreGame game
+  +Future<dynamic> onLoad()
+  +void onCollision()
+}
+
+"codexplore_game::elements::portables.dart::PortableComponent" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flame::src::components::position_component.dart::PositionComponent" <|-- "codexplore_game::elements::portables.dart::PortableComponent"
+"flame::src::collisions::collision_callbacks.dart::CollisionCallbacks" <|-- "codexplore_game::elements::portables.dart::PortableComponent"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "codexplore_game::elements::portables.dart::PortableComponent"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "codexplore_game::elements::portables.dart::PortableComponent"
+
+class "codexplore_game::elements::vehicle_component.dart::VehicleComponent" {
+  +CodexploreGame game
+  +SpriteAnimation downAnimation
+  +SpriteAnimation leftAnimation
+  +SpriteAnimation rightAnimation
+  +SpriteAnimation upAnimation
+  +SpriteAnimation idleAnimation
+  +double animationSpeed
+  +Vector2 vVelocity
+  +Future<void> onLoad()
+  +void update()
+  +void move()
+  +void onCollision()
+}
+
+"codexplore_game::elements::vehicle_component.dart::VehicleComponent" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"codexplore_game::elements::vehicle_component.dart::VehicleComponent" o-- "flame::src::sprite_animation.dart::SpriteAnimation"
+"codexplore_game::elements::vehicle_component.dart::VehicleComponent" o-- "vector_math::vector_math_64.dart::Vector2"
+"flame::src::components::sprite_animation_component.dart::SpriteAnimationComponent" <|-- "codexplore_game::elements::vehicle_component.dart::VehicleComponent"
+"flame::src::collisions::collision_callbacks.dart::CollisionCallbacks" <|-- "codexplore_game::elements::vehicle_component.dart::VehicleComponent"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "codexplore_game::elements::vehicle_component.dart::VehicleComponent"
+
+class "codexplore_game::elements::gamepoints.dart::GamePointsComponent" {
+  +CodexploreGame game
+  +Future<dynamic> onLoad()
+  +void onCollision()
+}
+
+"codexplore_game::elements::gamepoints.dart::GamePointsComponent" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flame::src::components::position_component.dart::PositionComponent" <|-- "codexplore_game::elements::gamepoints.dart::GamePointsComponent"
+"flame::src::collisions::collision_callbacks.dart::CollisionCallbacks" <|-- "codexplore_game::elements::gamepoints.dart::GamePointsComponent"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "codexplore_game::elements::gamepoints.dart::GamePointsComponent"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "codexplore_game::elements::gamepoints.dart::GamePointsComponent"
+
+abstract class "codexplore_game::vehicle_design_screen.dart::ListItem" {
+  +Widget buildTitle()
+  +Widget buildSubTitle()
+}
+
+class "codexplore_game::vehicle_design_screen.dart::ProgrammableOption" {
+  +String Category
+  +String Name
+  +Widget buildSubTitle()
+  +Widget buildTitle()
+}
+
+"codexplore_game::vehicle_design_screen.dart::ListItem" <|-- "codexplore_game::vehicle_design_screen.dart::ProgrammableOption"
+
+class "codexplore_game::vehicle_design_screen.dart::DropdownButtonOptions" {
+  +List<String> list
+  +State<DropdownButtonOptions> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "codexplore_game::vehicle_design_screen.dart::DropdownButtonOptions"
+
+class "codexplore_game::vehicle_design_screen.dart::_DropdownButtonState" {
+  +String dropdownValue
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "codexplore_game::vehicle_design_screen.dart::_DropdownButtonState"
+
+class "codexplore_game::vehicle_design_screen.dart::VehicleScreen" {
+  {static} -String _title
+  {static} -Color _primaryColor
+  +String gameStartInfo
+  +Widget build()
+}
+
+"codexplore_game::vehicle_design_screen.dart::VehicleScreen" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::vehicle_design_screen.dart::VehicleScreen"
+
+class "codexplore_game::vehicle_design_screen.dart::MyStatefulWidget" {
+  +String p
+  +State<MyStatefulWidget> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "codexplore_game::vehicle_design_screen.dart::MyStatefulWidget"
+
+class "codexplore_game::vehicle_design_screen.dart::OverlayNotifier" {
+  +dynamic sendNotification()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "codexplore_game::vehicle_design_screen.dart::OverlayNotifier"
+
+class "codexplore_game::vehicle_design_screen.dart::GameElementsNotifier" {
+  +dynamic notification()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "codexplore_game::vehicle_design_screen.dart::GameElementsNotifier"
+
+class "codexplore_game::vehicle_design_screen.dart::NotifierApp" {
+  +String inputData
+  +CodexploreGame game
+  +MaterialApp build()
+}
+
+"codexplore_game::vehicle_design_screen.dart::NotifierApp" o-- "codexplore_game::codexplore_game.dart::CodexploreGame"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "codexplore_game::vehicle_design_screen.dart::NotifierApp"
+
+class "codexplore_game::vehicle_design_screen.dart::_MyStatefulWidgetState" {
+  +TextEditingController nameController
+  +TextEditingController passwordController
+  -int _choice
+  +String dummy
+  {static} -Color _primaryColor
+  +void initState()
+  -void _navigateToNextScreen()
+  +Widget build()
+}
+
+"codexplore_game::vehicle_design_screen.dart::_MyStatefulWidgetState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"codexplore_game::vehicle_design_screen.dart::_MyStatefulWidgetState" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::State" <|-- "codexplore_game::vehicle_design_screen.dart::_MyStatefulWidgetState"
+
+
+@enduml

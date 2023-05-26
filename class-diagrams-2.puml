@@ -1,0 +1,38 @@
+@startuml
+
+class GamePlayView {
+    # List<Vector2> nodePoints
+    # TiledComponent env
+    # GamePlayController gamePlayController
+    ~ build(context): Widget
+}
+
+class GamePlayController {
+    # VehicleComponent vehicle
+    # MobilityModel playerCommands
+    ~ notifyListeners(): void
+    ~ setVehicleCommands(): void
+    ~ setGameNodes(): void
+}
+
+class VehicleComponent {
+    # GamePlay game
+    ~ VehicleComponent(game)
+}
+
+class MobilityModel {
+    # List<String> commands
+}
+
+class GameNodesComponent {
+    # Vector2 point
+    ~ notifyGame()
+}
+
+GamePlayView --* GamePlayController
+GamePlayController --* MobilityModel
+GamePlayController --* VehicleComponent
+GamePlayController --* GameNodesComponent
+
+
+@enduml

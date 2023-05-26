@@ -1,0 +1,63 @@
+@@startuml
+
+class DesignScreen {
+    # String title
+    # String primaryColor
+    # GameDesignView gameDesignView
+    # VehicleDesignView vDesignView
+    ~ Build (Context): Widget
+}
+
+class GameDesignView {
+    # GameDesignController gameDesignController
+    ~ Build (context): Widget
+}
+
+class GameDesignModel {
+    # TiledComponent envMap
+    # PointerComponent mapPointer
+    # List<Vector2> nodePoints
+}
+
+class PointerComponent {
+    # SpriteSheet spriteSheet
+}
+
+class GameDesignController {
+    # GameDesignModel gameDesignModel
+    ~ onLoad()
+    ~ onUpdate()
+    ~ loadGamePoints()
+    ~ loadMap()
+    ~ loadPointer()
+}
+
+GameDesignController --* GameDesignModel
+GameDesignView --* GameDesignController
+
+class VehicleDesignView {
+    # DropDownButton nodeSelection
+    # TextEditingController directionInputs
+    # ElevatedButton addAction
+    # VehicleDesignController vDesignController
+    ~ Build (Context): Widget
+}
+
+class VehicleDesignController {
+    # VehicleDesignModel vDModel
+    ~ getPlayerInformation()
+}
+
+class VehicleDesignModel {
+    # String playerNames
+    # String gameMode
+}
+
+DesignScreen --* VehicleDesignView
+VehicleDesignView --* VehicleDesignController
+VehicleDesignController --* VehicleDesignModel
+DesignScreen --* GameDesignView
+GameDesignModel --* PointerComponent
+
+
+@@enduml

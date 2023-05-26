@@ -1,0 +1,34 @@
+@startuml
+
+class LaunchScreen {
+    # String title
+    # String primaryColor
+    # GameInitView GameInitView
+    ~ Build(context): Widget
+}
+
+class GameInitView {
+    # Input TextInput
+    # Input RadioButton
+    # Button InitGameButton
+    # Boolean secondPlayerInputVisibility
+    # GameInitController gameInitController
+    ~ Build(context): Widget
+    ~ Navigate(Screen): void
+}
+
+class GameInitModel {
+    # String Player1Name
+    # String Player2Name
+    # String PlayMode
+}
+
+class GameInitController {
+    ~ createGameInit(): Future<GameInit>
+}
+
+GameInitController --* GameInitModel
+GameInitView --* GameInitController
+LaunchScreen --* GameInitView
+
+@enduml
